@@ -1,218 +1,103 @@
-<html>
- <head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Q# Language Documentation</title> 
-  <link rel="stylesheet" href="styles.css"> 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css"> 
- <style type="text/css" id="dcoder_stylesheet">body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    background-color: #f5f5f5;
-    color: #333;
-}
-
-#navbar {
-    position: fixed;
-    width: 250px;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-y: auto;
-}
-
-#navbar header {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    color: #ffcc00;
-}
-
-.nav-link {
-    display: block;
-    color: white;
-    text-decoration: none;
-    margin: 10px 0;
-    transition: color 0.3s;
-}
-
-.nav-link:hover {
-    color: #ffcc00;
-}
-
-#main-doc {
-    margin-left: 270px;
-    padding: 20px;
-    max-width: 800px;
-}
-
-.main-section {
-    margin-bottom: 50px;
-}
-
-.main-section header {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #ffcc00;
-    padding-bottom: 5px;
-}
-
-p, pre, code, ul {
-    margin: 10px 0;
-}
-
-pre code {
-    background-color: #f4f4f4;
-    padding: 10px;
-    display: block;
-    border-radius: 5px;
-}
-
-ul {
-    list-style-type: disc;
-    margin-left: 20px;
-}
-
-@media (max-width: 768px) {
-    #navbar {
-        position: static;
-        width: 100%;
-        height: auto;
-    }
-    
-    #main-doc {
-        margin-left: 0;
-    }
-}</style></head> 
- <body> 
-  <nav id="navbar"> 
-   <header>
-    Q# Documentation
-   </header> <a class="nav-link" href="#Introduction">Introduction</a> <a class="nav-link" href="#Setup">Setup</a> <a class="nav-link" href="#Syntax">Syntax</a> <a class="nav-link" href="#Examples">Examples</a> <a class="nav-link" href="#Best_Practices">Best Practices</a> 
-  </nav> 
-  <main id="main-doc"> 
-   <section id="Introduction" class="main-section"> 
-    <header>
-     Introduction
-    </header> 
-    <p>Q# is a programming language designed for expressing quantum algorithms. It is part of the Microsoft Quantum Development Kit.</p> 
-    <p>Q# provides a high-level language for writing quantum programs and includes features for defining and calling quantum operations and functions.</p> 
-    <pre><code class="language-qsharp">operation HelloQ() : Unit { Message("Hello, quantum world!"); }</code></pre> 
-    <p>Q# programs are structured into operations and functions that can be executed on quantum computers or simulators.</p> 
-   </section> 
-   <section id="Setup" class="main-section"> 
-    <header>
-     Setup
-    </header> 
-    <p>To get started with Q#, you'll need to install the Quantum Development Kit (QDK).</p> 
-    <p>You can install the QDK for your preferred environment, such as Visual Studio, VS Code, or Jupyter Notebooks.</p> 
-    <pre><code class="language-bash">dotnet new -i Microsoft.Quantum.ProjectTemplates</code></pre> 
-    <p>Once installed, you can create a new Q# project and start writing quantum code.</p> 
-    <ul> 
-     <li>Install .NET Core SDK</li> 
-     <li>Install the QDK</li> 
-     <li>Create a new Q# project</li> 
-    </ul> 
-   </section> 
-   <section id="Syntax" class="main-section"> 
-    <header>
-     Syntax
-    </header> 
-    <p>Q# syntax is designed to be familiar to classical programmers while introducing quantum concepts.</p> 
-    <p>Key constructs in Q# include operations, functions, qubits, and measurements.</p> 
-    <pre><code class="language-qsharp">operation ApplyHadamard(qubit : Qubit) : Unit { H(qubit); }</code></pre> 
-    <p>Q# uses a mix of classical and quantum constructs to express quantum algorithms effectively.</p> 
-    <ul> 
-     <li>Operations: Define quantum actions</li> 
-     <li>Functions: Define classical calculations</li> 
-     <li>Qubits: Represent quantum bits</li> 
-     <li>Measurements: Observe qubit states</li> 
-    </ul> 
-   </section> 
-   <section id="Examples" class="main-section"> 
-    <header>
-     Examples
-    </header> 
-    <p>Below are some examples of simple quantum programs written in Q#.</p> 
-    <p>Example 1: Apply a Hadamard gate to a qubit.</p> 
-    <pre><code class="language-qsharp">
-operation ApplyHadamardExample() : Unit {
-    using (qubit = Qubit()) {
-        H(qubit);
-        let result = M(qubit);
-        Message($"Result: {result}");
-        Reset(qubit);
-    }
-}</code></pre> 
-    <p>Example 2: Quantum teleportation protocol.</p> 
-    <pre><code class="language-qsharp">
-operation Teleportation(source : Qubit, target : Qubit) : Unit {
-    using (auxiliary = Qubit()) {
-        H(auxiliary);
-        CNOT(auxiliary, target);
-        CNOT(source, auxiliary);
-        H(source);
-        if (M(source) == One) { Z(target); }
-        if (M(auxiliary) == One) { X(target); }
-    }
-}</code></pre> 
-    <ul> 
-     <li>Hadamard Gate Application</li> 
-     <li>Quantum Teleportation</li> 
-    </ul> 
-   </section> 
-   <section id="Best_Practices" class="main-section"> 
-    <header>
-     Best Practices
-    </header> 
-    <p>When writing Q# programs, follow these best practices to ensure clarity and efficiency.</p> 
-    <p>Practice 1: Use descriptive names for operations and functions.</p> 
-    <pre><code class="language-qsharp">operation ApplyHadamardGate(qubit : Qubit) : Unit { H(qubit); }</code></pre> 
-    <p>Practice 2: Comment your code to explain complex quantum logic.</p> 
-    <pre><code class="language-qsharp">
-// This operation applies a Hadamard gate to the given qubit
-operation ApplyHadamardGate(qubit : Qubit) : Unit {
-    H(qubit);
-}</code></pre> 
-    <ul> 
-     <li>Use descriptive names</li> 
-     <li>Comment complex logic</li> 
-    </ul> 
-   </section> 
-  </main> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script> 
-  <script src="script.js"></script> 
- 
-<script type="text/javascript" id="dcoder_script">// script.js
-document.addEventListener('DOMContentLoaded', (event) => {
-    const navbarLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.main-section');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                document.querySelector('.nav-link[href="#' + entry.target.id + '"]').classList.add('active');
-            } else {
-                document.querySelector('.nav-link[href="#' + entry.target.id + '"]').classList.remove('active');
-            }
-        });
-    }, { threshold: 0.7 });
-
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-
-    navbarLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            document.querySelector(link.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
-});</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q# Language Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav id="navbar">
+        <header>Q# Documentation</header>
+        <a class="nav-link" href="#Introduction">Introduction</a>
+        <a class="nav-link" href="#Setup">Setup</a>
+        <a class="nav-link" href="#Syntax">Syntax</a>
+        <a class="nav-link" href="#Examples">Examples</a>
+        <a class="nav-link" href="#Best_Practices">Best Practices</a>
+    </nav>
+    <main id="main-doc">
+        <section id="Introduction" class="main-section">
+            <header>Introduction</header>
+            <p>Q# is a programming language designed for expressing quantum algorithms. It is part of the Microsoft Quantum Development Kit.</p>
+            <p>Q# provides a high-level language for writing quantum programs and includes features for defining and calling quantum operations and functions.</p>
+            <code>operation HelloQ() : Unit { Message("Hello, quantum world!"); }</code>
+            <p>Q# programs are structured into operations and functions that can be executed on quantum computers or simulators.</p>
+        </section>
+        <section id="Setup" class="main-section">
+            <header>Setup</header>
+            <p>To get started with Q#, you'll need to install the Quantum Development Kit (QDK).</p>
+            <p>You can install the QDK for your preferred environment, such as Visual Studio, VS Code, or Jupyter Notebooks.</p>
+            <code>dotnet new -i Microsoft.Quantum.ProjectTemplates</code>
+            <p>Once installed, you can create a new Q# project and start writing quantum code.</p>
+            <ul>
+                <li>Install .NET Core SDK</li>
+                <li>Install the QDK</li>
+                <li>Create a new Q# project</li>
+            </ul>
+        </section>
+        <section id="Syntax" class="main-section">
+            <header>Syntax</header>
+            <p>Q# syntax is designed to be familiar to classical programmers while introducing quantum concepts.</p>
+            <p>Key constructs in Q# include operations, functions, qubits, and measurements.</p>
+            <code>operation ApplyHadamard(qubit : Qubit) : Unit { H(qubit); }</code>
+            <p>Q# uses a mix of classical and quantum constructs to express quantum algorithms effectively.</p>
+            <ul>
+                <li>Operations: Define quantum actions</li>
+                <li>Functions: Define classical calculations</li>
+                <li>Qubits: Represent quantum bits</li>
+                <li>Measurements: Observe qubit states</li>
+            </ul>
+        </section>
+        <section id="Examples" class="main-section">
+            <header>Examples</header>
+            <p>Below are some examples of simple quantum programs written in Q#.</p>
+            <p>Example 1: Apply a Hadamard gate to a qubit.</p>
+            <code>
+                operation ApplyHadamardExample() : Unit {
+                    using (qubit = Qubit()) {
+                        H(qubit);
+                        let result = M(qubit);
+                        Message($"Result: {result}");
+                        Reset(qubit);
+                    }
+                }
+            </code>
+            <p>Example 2: Quantum teleportation protocol.</p>
+            <code>
+                operation Teleportation(source : Qubit, target : Qubit) : Unit {
+                    using (auxiliary = Qubit()) {
+                        H(auxiliary);
+                        CNOT(auxiliary, target);
+                        CNOT(source, auxiliary);
+                        H(source);
+                        if (M(source) == One) { Z(target); }
+                        if (M(auxiliary) == One) { X(target); }
+                    }
+                }
+            </code>
+            <ul>
+                <li>Hadamard Gate Application</li>
+                <li>Quantum Teleportation</li>
+            </ul>
+        </section>
+        <section id="Best_Practices" class="main-section">
+            <header>Best Practices</header>
+            <p>When writing Q# programs, follow these best practices to ensure clarity and efficiency.</p>
+            <p>Practice 1: Use descriptive names for operations and functions.</p>
+            <code>operation ApplyHadamardGate(qubit : Qubit) : Unit { H(qubit); }</code>
+            <p>Practice 2: Comment your code to explain complex quantum logic.</p>
+            <code>
+                // This operation applies a Hadamard gate to the given qubit
+                operation ApplyHadamardGate(qubit : Qubit) : Unit {
+                    H(qubit);
+                }
+            </code>
+            <ul>
+                <li>Use descriptive names</li>
+                <li>Comment complex logic</li>
+            </ul>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
